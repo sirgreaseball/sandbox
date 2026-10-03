@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team 11: Disk Scheduling — SCAN & C-SCAN Demo (Light Mode)</title>
+  
+  <!-- Scoped Module Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js v4 via CDN (Only permitted external library) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Standalone Demo Page Shell (Light Mode) */
+    body {
+      margin: 0;
+      padding: 24px;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .demo-wrapper {
+      width: 100%;
+      max-width: 1150px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #module-mount-point {
+      width: 100%;
+      min-height: 520px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-wrapper">
+    <!-- Mount Point for the Module -->
+    <div id="module-mount-point"></div>
+  </div>
+
+  <!-- Load Team 11 Module Script -->
+  <script src="module.js"></script>
+
+  <!-- Mount and Initialize Module -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const mountContainer = document.getElementById("module-mount-point");
+      const mod = window.OSDashboard.modules["team11_disk_scan"];
+
+      if (mod && typeof mod.render === "function") {
+        mod.render(mountContainer);
+      } else {
+        mountContainer.innerHTML = "<div style='color:red;'>Failed to load module 'team11_disk_scan'.</div>";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team 12 — LOOK &amp; C-LOOK</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --os-navy: #12304a;
+      --os-teal: #008d89;
+      --os-orange: #f28c28;
+      --os-bg: #f4f8f8;
+      --os-text: #172b3a;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--os-bg);
+      color: var(--os-text);
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <main id="team12-demo"></main>
+  <script src="module.js"></script>
+  <script>
+    window.OSDashboard = window.OSDashboard || { modules: {} };
+    if (window.OSDashboard.modules['team12_disk_look']) {
+      window.OSDashboard.modules['team12_disk_look'].render(document.getElementById('team12-demo'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Replacement Algorithms Demo</title>
+    <!-- CSS Scoped Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f5f7;
+        }
+        
+        #demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 0; /* Let module handle its own padding/layout */
+        }
+    </style>
+</head>
+<body>
+    <div id="demo-container">
+        <!-- Module will be rendered here -->
+        <div id="team14-root"></div>
+    </div>
+
+    <!-- Load Module Logic -->
+    <script src="module.js"></script>
+
+    <!-- Initialize Module -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const root = document.getElementById("team14-root");
+            const module = window.OSDashboard.modules["team14_page_optimal"];
+            
+            // Render the module
+            module.render(root);
+            
+            // Output initial metrics to console for verification
+            console.log("Initial Metrics:", module.getMetrics());
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Disk Scheduling — LOOK & C-LOOK
+
+This Team 12 module is a self-contained vanilla HTML, CSS, and JavaScript educational simulator for the LOOK and C-LOOK disk-scheduling algorithms, with editable request queue, initial head, maximum cylinder, direction control, animation, movement table, and a concise LOOK/C-LOOK versus SCAN/C-SCAN explanation. It ships with the sample request queue 98, 183, 37, 122, 14, 124, 65, 67, initial head 53, maximum cylinder 199, and Right direction, so the default LOOK service order is 53 → 65 → 67 → 98 → 122 → 124 → 183 → 37 → 14 with a total head movement of 299 cylinders, while C-LOOK produces 53 → 65 → 67 → 98 → 122 → 124 → 183 → 14 → 37. The module can be run by opening demo.html directly in a modern browser.

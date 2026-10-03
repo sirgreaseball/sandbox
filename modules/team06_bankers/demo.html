@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Banker's Algorithm</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .demo-page {
+            min-height: 100vh;
+            background: #eef2f5;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main
+        id="team06-container"
+        class="demo-page"
+        style="
+            --os-navy:#17324d;
+            --os-teal:#168a82;
+            --os-orange:#d9822b;
+            --os-bg:#eef2f5;
+            --os-text:#24313d;
+        "
+    >
+    </main>
+
+
+    <script>
+
+        window.OSDashboard =
+            window.OSDashboard || { modules: {} };
+
+    </script>
+
+
+    <script src="module.js"></script>
+
+
+    <script>
+
+        const container =
+            document.getElementById(
+                "team06-container"
+            );
+
+
+        window.OSDashboard.modules
+            ["team06_bankers"]
+            .render(container);
+
+    </script>
+
+</body>
+
+</html>

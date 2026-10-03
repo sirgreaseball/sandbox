@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readers-Writers Problem - Team 8</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Shared variables simulated from Team 15 */
+        :root {
+            --os-navy: #0f172a;
+            --os-teal: #14b8a6;
+            --os-orange: #f97316;
+            --os-bg: #f8fafc;
+            --os-text: #334155;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #e2e8f0;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Simulating the dashboard container Team 15 provides */
+        #dashboard-container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            min-height: 500px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Target Container for the Module -->
+    <div id="dashboard-container"></div>
+
+    <script src="module.js"></script>
+    <script>
+        // Simulate Team 15's rendering process
+        const container = document.getElementById('dashboard-container');
+        const module = window.OSDashboard.modules["team08_readers_writers"];
+        
+        if (module) {
+            // 1. Initial Render
+            module.render(container);
+            
+            // 2. Metrics check (simulating dashboard polling)
+            setInterval(() => {
+                const metrics = module.getMetrics();
+                console.log("Team 15 Polling Metrics:", metrics);
+            }, 5000);
+            
+        } else {
+            container.innerHTML = "<p style='padding: 20px; color: red;'>Module not found. Make sure module.js loaded correctly.</p>";
+        }
+    </script>
+</body>
+</html>

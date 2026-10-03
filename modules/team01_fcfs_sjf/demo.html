@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team 01 | FCFS & SJF Non-Preemptive Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="module-root"></div>
+
+<script>
+window.OSDashboard = window.OSDashboard || { modules:{} };
+
+(function(){
+"use strict";
+
+const KEY = "team01_fcfs_sjf";
+
+const DEFAULT_DATA = [
+  {pid:"P1", arrival:"", burst:""},
+  {pid:"P2", arrival:"", burst:""},
+  {pid:"P3", arrival:"", burst:""},
+  {pid:"P4", arrival:"", burst:""},
+  {pid:"P5", arrival:"", burst:""}
+];
+
+let processes = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let algorithm = "FCFS";
+let hasCalculated = false;
+let container = null;
+
+function clone(x){
+  return JSON.parse(JSON.stringify(x));
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+
+/* Scheduling calculation */
+function calculate(){
+  const pending = processes.map(function(p,i){
+    return {
+      pid:String(p.pid || ("P"+(i+1))),
+      arrival:Number(p.arrival),
+      burst:Number(p.burst)
+    };
+  }).filter(function(p){
+    return Number.isFinite(p.arrival) && p.arrival>=0 && Number.isFinite(p.burst) && p.burst>0;
+  });
+
+  const result=[];
+  let time=0;
+
+  if(algorithm==="FCFS"){
+    pending.sort(function(a,b){
+      return a.arrival-b.arrival || a.pid.localeCompare(b.pid);
+    });
+
+    pending.forEach(function(p){
+      const start=Math.max(time,p.arrival);
+      const completion=start+p.burst;
+      result.push({
+        pid:p.pid,arrival:p.arrival,burst:p.burst,start:start,
+        completion:completion,
+        turnaround:completion-p.arrival,
+        waiting:start-p.arrival
+      });
+      time=completion;
+    });
+  }else{
+    while(pending.length){
+      const ready=pending.filter(function(p){return p.arrival<=time;});
+
+      if(!ready.length){
+        time=Math.min.apply(null,pending.map(function(p){return p.arrival;}));
+        continue;
+      }
+
+      ready.sort(function(a,b){
+        return a.burst-b.burst || a.arrival-b.arrival || a.pid.localeCompare(b.pid);
+      });
+
+      const p=ready[0];
+      pending.splice(pending.indexOf(p),1);
+      const start=time;
+      const completion=start+p.burst;
+      result.push({
+        pid:p.pid,arrival:p.arrival,burst:p.burst,start:start,
+        completion:completion,
+        turnaround:completion-p.arrival,
+        waiting:start-p.arrival
+      });
+      time=completion;
+    }
+  }
+
+  return result;
+}
+
+function getMetrics(rows){
+  if(!rows.length) return {aw:0,at:0,total:0,util:0};
+
+  const total=Math.max.apply(null,rows.map(function(p){return p.completion;}));
+  const waiting=rows.reduce(function(s,p){return s+p.waiting;},0);
+  const turnaround=rows.reduce(function(s,p){return s+p.turnaround;},0);
+  const busy=rows.reduce(function(s,p){return s+p.burst;},0);
+
+  return {
+    aw:waiting/rows.length,
+    at:turnaround/rows.length,
+    total:total,
+    util:total ? busy/total*100 : 0
+  };
+}
+
+function render(target){
+  container=target;
+
+  container.innerHTML=`
+  <div class="os-team01">
+    <div class="os-team01-shell">
+
+      <header class="os-team01-header">
+        <div>
+          <h1 class="os-team01-title">FCFS & SJF Non-Preemptive</h1>
+        </div>
+      </header>
+
+      <section class="os-team01-intro">
+        <h2>CPU Scheduling: What Is a CPU Scheduler?</h2>
+        <p>The <b>CPU scheduler</b> is the operating-system component that selects which process from the ready queue gets the CPU next. Its goal is to keep the CPU busy while managing waiting time, turnaround time, fairness, and responsiveness.</p>
+
+        <div class="os-team01-definition-card">
+          <h4>Scheduling Types</h4>
+          <ul class="os-team01-step-list-inline">
+            <li><b>Preemptive Scheduling:</b> CPU can take the process away while it is running and give the CPU to another process.</li>
+            <li><b>Non-Preemptive Scheduling:</b> Once a process gets the CPU, it keeps the CPU until it finishes or enters a waiting state.</li>
+          </ul>
+        </div>
+
+        <div class="os-team01-flowchart" aria-label="CPU scheduling algorithms flow chart">
+          <div class="os-team01-flowchart-root">CPU Scheduling Algorithms</div>
+          <div class="os-team01-flowchart-arrow">↓</div>
+          <div class="os-team01-flowchart-branches">
+            <div class="os-team01-flowchart-branch preemptive">
+              <div class="os-team01-flowchart-title">Preemptive</div>
+              <div class="os-team01-flowchart-note">The running process may be interrupted.</div>
+              <div class="os-team01-flowchart-arrow">↓</div>
+              <div class="os-team01-flowchart-items">
+                <span>SJF (Preemptive)</span>
+                <span>Priority (Preemptive)</span>
+                <span>Round Robin</span>
+              </div>
+            </div>
+            <div class="os-team01-flowchart-branch non-preemptive">
+              <div class="os-team01-flowchart-title">Non-Preemptive</div>
+              <div class="os-team01-flowchart-note">The process keeps the CPU until completion.</div>
+              <div class="os-team01-flowchart-arrow">↓</div>
+              <div class="os-team01-flowchart-items">
+                <span>FCFS</span>
+                <span>SJF</span>
+                <span>Priority</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="os-team01-definition-card">
+          <h4>Terminologies Used in CPU Scheduling</h4>
+          <ul class="os-team01-step-list-inline">
+            <li><b>Arrival Time:</b> The time at which the process arrives in the ready queue.</li>
+            <li><b>Completion Time:</b> The time at which the process completes its execution.</li>
+            <li><b>Burst Time:</b> The time required by a process for CPU execution.</li>
+            <li><b>TAT (Turnaround Time):</b> Total time taken by a process from arrival until its completion.<br><b>TAT = Completion Time - Arrival Time</b></li>
+            <li><b>WT (Waiting Time):</b> Total time a process waits in the ready queue for CPU execution.<br><b>WT = Turnaround Time - Burst Time</b></li>
+          </ul>
+        </div>
+
+        <div class="os-team01-intro-grid">
+          <div class="os-team01-intro-item">
+            <h3>FCFS (First-Come, First-Served)</h3>
+            <p><b>Definition:</b> FCFS schedules processes in the order they arrive in the ready queue. It is non-preemptive, so once a process starts, it continues until its CPU burst is complete.</p>
+            <div class="os-team01-pros-cons">
+              <div class="os-team01-pros"><b>Advantages</b>Simple to understand and implement; predictable arrival order; no process is interrupted after it starts.</div>
+              <div class="os-team01-cons"><b>Disadvantages</b>A long process can make many short processes wait (convoy effect); average waiting time can become large.</div>
+            </div>
+            <div class="os-team01-definition-card">
+              <h4>How FCFS Works</h4>
+              <ol class="os-team01-step-list-inline">
+                <li>Place processes in the ready queue by arrival time.</li>
+                <li>Select the process at the front when the CPU is free.</li>
+                <li>Run it until its burst is complete.</li>
+                <li>Move to the next process in arrival order and repeat.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="os-team01-intro-item">
+            <h3>SJF (Shortest Job First) — Non-Preemptive</h3>
+            <p><b>Definition:</b> When the CPU becomes free, SJF selects the available process with the smallest CPU burst time. The selected process then runs until completion without preemption.</p>
+            <div class="os-team01-pros-cons">
+              <div class="os-team01-pros"><b>Advantages</b>Often produces a low average waiting time when burst times are known; short jobs finish quickly; selection rule is clear.</div>
+              <div class="os-team01-cons"><b>Disadvantages</b>Burst times must be known or estimated; long jobs can wait behind short jobs; only already-arrived processes can be selected.</div>
+            </div>
+            <div class="os-team01-definition-card">
+              <h4>How SJF Non-Preemptive Works</h4>
+              <ol class="os-team01-step-list-inline">
+                <li>Check which processes have arrived in the ready queue.</li>
+                <li>Compare the burst times of the available processes.</li>
+                <li>Select the process with the shortest burst time.</li>
+                <li>Run it until completion, then repeat when the CPU is free.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="os-team01-control">
+        <div class="os-team01-tabs">
+          <button class="os-team01-tab active" id="os-team01-fcfs">FCFS</button>
+          <button class="os-team01-tab" id="os-team01-sjf">SJF • Non-Preemptive</button>
+        </div>
+        <div class="os-team01-actions">
+          <button class="os-team01-btn" id="os-team01-calc">Calculate</button>
+          <button class="os-team01-btn" id="os-team01-reset">Reset</button>
+        </div>
+      </div>
+
+      <div class="os-team01-metrics">
+        <div class="os-team01-metric">
+          <span class="os-team01-metric-label">CPU FINISH TIME</span>
+          <strong class="os-team01-metric-value" id="os-team01-total">-</strong>
+          <span class="os-team01-metric-unit">time units</span>
+        </div>
+        <div class="os-team01-metric">
+          <span class="os-team01-metric-label">AVERAGE TURNAROUND TIME</span>
+          <strong class="os-team01-metric-value" id="os-team01-at">-</strong>
+          <span class="os-team01-metric-unit">time units</span>
+        </div>
+        <div class="os-team01-metric">
+          <span class="os-team01-metric-label">AVERAGE WAITING TIME</span>
+          <strong class="os-team01-metric-value" id="os-team01-aw">-</strong>
+          <span class="os-team01-metric-unit">time units</span>
+        </div>
+        <div class="os-team01-metric">
+          <span class="os-team01-metric-label">CPU UTILIZATION</span>
+          <strong class="os-team01-metric-value" id="os-team01-util">-</strong>
+          <span class="os-team01-metric-unit">busy time</span>
+        </div>
+      </div>
+
+      <div class="os-team01-grid">
+
+        <section class="os-team01-panel">
+          <div class="os-team01-panel-head">
+            <div>
+              <h2>Process Input</h2>
+              <p>Edit PID, arrival time and burst time.</p>
+            </div>
+            <button class="os-team01-add" id="os-team01-add">＋ Add Process</button>
+          </div>
+
+          <div class="os-team01-table-wrap">
+            <table class="os-team01-table">
+              <thead>
+                <tr><th>PID</th><th>Arrival Time</th><th>Burst Time</th><th>Remove</th></tr>
+              </thead>
+              <tbody id="os-team01-input"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="os-team01-panel">
+          <div class="os-team01-panel-head">
+            <div>
+              <h2>Scheduling Results</h2>
+              <p>CT = Completion • TAT = Turnaround • WT = Waiting</p>
+            </div>
+            <span class="os-team01-chip" id="os-team01-chip">FCFS</span>
+          </div>
+
+          <div class="os-team01-table-wrap">
+            <table class="os-team01-table">
+              <thead>
+                <tr><th>PID</th><th>AT</th><th>BT</th><th>CT</th><th>TAT</th><th>WT</th></tr>
+              </thead>
+              <tbody id="os-team01-results"></tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <section class="os-team01-panel">
+        <div class="os-team01-panel-head">
+          <div>
+            <h2>Ready Queue</h2>
+            <p>Processes waiting for CPU service in the calculated execution order.</p>
+          </div>
+          <span class="os-team01-chip" id="os-team01-ready-chip">FCFS</span>
+        </div>
+        <div class="os-team01-ready-wrap" id="os-team01-ready"></div>
+      </section>
+
+      <section class="os-team01-panel">
+        <div class="os-team01-panel-head">
+          <div>
+            <h2>Gantt Chart</h2>
+            <p>Calculated execution order and timing.</p>
+          </div>
+          <div class="os-team01-legend">
+            <span class="run-dot"></span> Running
+            <span class="idle-dot"></span> Idle
+          </div>
+        </div>
+        <div class="os-team01-gantt-wrap" id="os-team01-gantt"></div>
+      </section>
+
+    </div>
+  </div>`;
+
+  bindEvents();
+  update();
+}
+
+function bindEvents(){
+  container.querySelector("#os-team01-fcfs").onclick=function(){
+    algorithm="FCFS";
+    update();
+  };
+
+  container.querySelector("#os-team01-sjf").onclick=function(){
+    algorithm="SJF";
+    update();
+  };
+
+  container.querySelector("#os-team01-calc").onclick=function(){
+    hasCalculated=true;
+    update();
+  };
+
+  container.querySelector("#os-team01-reset").onclick=reset;
+
+  container.querySelector("#os-team01-add").onclick=function(){
+    processes.push({
+      pid:"P"+(processes.length+1),
+      arrival:"",
+      burst:""
+    });
+    hasCalculated=false;
+    update();
+  };
+
+}
+
+function update(){
+  const rows=hasCalculated ? calculate() : [];
+  const m=getMetrics(rows);
+
+  container.querySelector("#os-team01-fcfs").classList.toggle("active",algorithm==="FCFS");
+  container.querySelector("#os-team01-sjf").classList.toggle("active",algorithm==="SJF");
+
+  container.querySelector("#os-team01-chip").textContent=algorithm;
+  container.querySelector("#os-team01-aw").textContent=hasCalculated ? m.aw.toFixed(2) : "-";
+  container.querySelector("#os-team01-at").textContent=hasCalculated ? m.at.toFixed(2) : "-";
+  container.querySelector("#os-team01-util").textContent=hasCalculated ? m.util.toFixed(1)+"%" : "-";
+  container.querySelector("#os-team01-total").textContent=hasCalculated ? m.total : "-";
+  renderInput();
+  renderResults(rows);
+  renderReadyQueue(rows);
+  drawGantt(rows,m.total);
+}
+
+function renderReadyQueue(rows){
+  const target=container.querySelector("#os-team01-ready");
+  container.querySelector("#os-team01-ready-chip").textContent=algorithm;
+
+  if(!rows.length){
+    target.innerHTML='<div class="os-team01-ready-empty">Enter arrival and burst times, then click Calculate.</div>';
+    return;
+  }
+
+  const items=[];
+  rows.forEach(function(p,index){
+    if(index){
+      items.push('<div class="os-team01-ready-arrow">→</div>');
+    }
+    items.push('<div class="os-team01-ready-item">'+
+      '<div class="os-team01-ready-box">'+escapeHTML(p.pid)+'</div>'+
+      '<div class="os-team01-ready-burst">BT: '+escapeHTML(String(p.burst))+'</div>'+
+      '</div>');
+  });
+
+  target.innerHTML='<div class="os-team01-ready-strip">'+items.join("")+'</div>';
+}
+
+
+function renderInput(){
+  const body=container.querySelector("#os-team01-input");
+
+  body.innerHTML=processes.map(function(p,i){
+    return `
+      <tr>
+        <td><input class="os-team01-input" data-index="${i}" data-field="pid" value="${escapeHTML(p.pid)}"></td>
+        <td><input class="os-team01-input" type="number" min="0" data-index="${i}" data-field="arrival" value="${p.arrival}"></td>
+        <td><input class="os-team01-input" type="number" min="1" data-index="${i}" data-field="burst" value="${p.burst}"></td>
+        <td><button class="os-team01-delete" data-delete="${i}" title="Delete process">×</button></td>
+      </tr>`;
+  }).join("");
+
+  body.querySelectorAll("input").forEach(function(input){
+    input.onchange=function(){
+      const i=Number(input.dataset.index);
+      const field=input.dataset.field;
+      processes[i][field]=input.value;
+      hasCalculated=false;
+    };
+  });
+
+  body.querySelectorAll("[data-delete]").forEach(function(button){
+    button.onclick=function(){
+      if(processes.length<=1) return;
+      processes.splice(Number(button.dataset.delete),1);
+      hasCalculated=false;
+      update();
+    };
+  });
+}
+
+function renderResults(rows){
+  container.querySelector("#os-team01-results").innerHTML=rows.length ? rows.map(function(p){
+    return `<tr>
+      <td><b>${escapeHTML(p.pid)}</b></td>
+      <td>${p.arrival}</td>
+      <td>${p.burst}</td>
+      <td>${p.completion}</td>
+      <td>${p.turnaround}</td>
+      <td>${p.waiting}</td>
+    </tr>`;
+  }).join("") : '<tr><td colspan="6" class="os-team01-empty">Enter arrival and burst times, then click Calculate.</td></tr>';
+}
+
+function drawGantt(rows,visible){
+  const target=container.querySelector("#os-team01-gantt");
+
+  if(!visible){
+    target.innerHTML='<div class="os-team01-empty">No CPU execution to display.</div>';
+    return;
+  }
+
+  const shown=rows.filter(function(p){return p.start<visible;});
+  const pieces=[];
+  let cursor=0;
+
+  shown.forEach(function(p){
+    if(p.start>cursor){
+      pieces.push({label:"IDLE",start:cursor,end:Math.min(p.start,visible),idle:true});
+    }
+    pieces.push({label:p.pid,start:p.start,end:Math.min(p.completion,visible),idle:false});
+    cursor=Math.min(p.completion,visible);
+  });
+
+  if(cursor<visible){
+    pieces.push({label:"IDLE",start:cursor,end:visible,idle:true});
+  }
+
+  let blocks="";
+  pieces.forEach(function(piece){
+    const duration=piece.end-piece.start;
+    const width=Math.max(55,duration*42);
+    blocks+='<div class="os-team01-gantt-piece" style="width:'+width+'px;min-width:'+width+'px">'+
+      '<div class="os-team01-gantt-block '+(piece.idle?'idle':'')+'">'+escapeHTML(piece.label)+'</div>'+
+      '<div class="os-team01-gantt-duration '+(piece.idle?'idle':'')+'">'+piece.start+'-'+piece.end+'</div>'+
+      '</div>';
+  });
+
+  target.innerHTML='<div class="os-team01-gantt-row">'+blocks+'</div>'+
+    '<div class="os-team01-time-caption">Each process appears once for its complete CPU burst; the label underneath shows start-finish time.</div>';
+}
+
+function reset(){
+  processes=clone(DEFAULT_DATA);
+  algorithm="FCFS";
+  hasCalculated=false;
+  update();
+}
+
+window.OSDashboard.modules[KEY]={
+  title:"CPU Scheduling I — FCFS & SJF (Non-Preemptive)",
+  render:render,
+  reset:reset,
+  getMetrics:function(){
+    const m=getMetrics(calculate());
+    return {
+      primaryMetricLabel:"Average Waiting Time",
+      primaryMetricValue:Number(m.aw.toFixed(2)),
+      unit:"time units"
+    };
+  }
+};
+
+render(document.getElementById("module-root"));
+
+})();
+</script>
+
+<script src="module.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f8fb">
+    <title>Dining Philosophers Problem | Operating Systems</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="module-container"></div>
+    <script src="module.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.documentElement.classList.add("dp-page");
+            document.body.classList.add("dp-page");
+            const mount = document.getElementById("module-container");
+            mount.classList.add("dp-mount");
+            const simulator = window.OSDashboard.modules["team09_dining_phil"];
+            if (!simulator) {
+                mount.textContent = "The simulation could not be loaded. Please check module.js.";
+                return;
+            }
+            mount.innerHTML = `
+                <main class="dp-cover">
+                    <header class="dp-header">
+                        <div><h1>Dining Philosophers Problem</h1><p>Process Synchronization <b>•</b> Deadlock Avoidance</p></div>
+                    </header>
+                    <div class="dp-panels dp-reference-grid">
+                        <div class="dp-reference-left">
+                        <section class="dp-panel dp-about">
+                            <div class="dp-about-copy">
+                                <h2>About the Problem</h2>
+                                <p class="dp-intro-copy">The Dining Philosophers Problem is a classic process synchronization problem in Operating Systems. Five philosophers sit around a circular table with one fork between each pair. Each philosopher alternates between thinking, becoming hungry, acquiring two forks, eating, and releasing the forks.</p>
+                                <div class="dp-code-card" aria-label="Python code example showing asymmetric fork acquisition to prevent deadlock">
+                                    <div class="dp-code-title"><span aria-hidden="true">🐍</span><b>Python Code (Deadlock Prevention)</b><span class="dp-code-copy" aria-hidden="true">▢</span></div>
+                                    <pre><code><span class="dp-code-key">import</span> threading
+
+<span class="dp-code-key">def</span> dine(philosopher_id, forks):
+    <span class="dp-code-comment"># Assign fork indices (Circular layout using modulo)</span>
+    left, right = philosopher_id, (philosopher_id + 1) % len(forks)
+
+    <span class="dp-code-comment"># Asymmetric resource allocation to break circular wait (Deadlock Prevention)</span>
+    <span class="dp-code-key">if</span> philosopher_id == len(forks) - 1:
+        first_fork, second_fork = forks[right], forks[left]
+    <span class="dp-code-key">else</span>:
+        first_fork, second_fork = forks[left], forks[right]
+
+    <span class="dp-code-comment"># Critical Section: Safely acquire resources sequentially</span>
+    <span class="dp-code-key">with</span> first_fork:
+        <span class="dp-code-key">with</span> second_fork:
+            print(<span class="dp-code-string">f"Philosopher {philosopher_id} is eating."</span>)</code></pre>
+                                </div>
+                                <div class="dp-why">
+                                    <h3>Why it matters?</h3>
+                                    <div class="dp-why-grid">
+                                        <article class="dp-why-card"><span class="dp-icon dp-icon-teal">⚙</span><strong>Process<br>Synchronization</strong><p>Coordinates concurrent processes and avoids race conditions.</p></article>
+                                        <article class="dp-why-card"><span class="dp-icon dp-icon-orange">▤</span><strong>Resource<br>Sharing</strong><p>Multiple processes compete for limited shared resources.</p></article>
+                                        <article class="dp-why-card"><span class="dp-icon dp-icon-green">◆</span><strong>Deadlock<br>Prevention</strong><p>Helps understand and prevent deadlock situations.</p></article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="dp-panel dp-deadlock dp-deadlock-reference">
+                            <h2>Deadlock Scenario</h2>
+                            <p>When every philosopher holds one fork and waits for the next, no philosopher can proceed. This creates a circular wait condition and results in deadlock.</p>
+                            <div class="dp-circular-note"><span>⚠</span><div><b>Circular Wait</b><small>Each philosopher holds one fork and waits for the next fork, resulting in a deadlock.</small></div></div>
+                            <div class="dp-chain" aria-label="Circular wait among five philosophers">
+                                <div class="dp-chain-row"><article><b>P1</b><small>Holds F1</small><strong>Waits for F2</strong></article><i>⟶</i><article><b>P2</b><small>Holds F2</small><strong>Waits for F3</strong></article><i>⟶</i><article><b>P3</b><small>Holds F3</small><strong>Waits for F4</strong></article><i>⟶</i><article><b>P4</b><small>Holds F4</small><strong>Waits for F5</strong></article><i>⟶</i><article><b>P5</b><small>Holds F5</small><strong>Waits for F1</strong></article></div>
+                                <div class="dp-cycle"><span>↑</span><i></i><b>⚠ &nbsp; CIRCULAR WAIT</b><i></i><span>↶</span></div>
+                            </div>
+                            <div class="dp-deadlock-reasons"><h3>Why Deadlock Happens?</h3><ol><li>Each philosopher holds one fork (resource).</li><li>Each philosopher waits for the next fork.</li><li>A circular chain of waiting is formed.</li><li>No philosopher can proceed, so the system is deadlocked.</li></ol></div>
+                        </section>
+                        <section class="dp-panel dp-live">
+                            <div class="dp-live-heading"><div><h2>Live Dining Table</h2><p>Five philosophers and five forks arranged in a circular table.</p></div><div class="dp-live-legend"><span><i></i> Thinking</span><span><i></i> Hungry</span><span><i></i> Eating</span></div></div>
+                            <div class="dp-table-wrap" role="img" aria-label="Five philosophers sharing five forks around a circular table">
+                                <div class="dp-ring"></div><div class="dp-table"><b>DINING<br>TABLE</b><small>5 Philosophers<br>5 Forks</small></div>
+                                <div class="dp-phil dp-p1"><b>P1</b><small>Thinking</small></div><div class="dp-phil dp-p2"><b>P2</b><small>Thinking</small></div><div class="dp-phil dp-p3"><b>P3</b><small>Thinking</small></div><div class="dp-phil dp-p4"><b>P4</b><small>Thinking</small></div><div class="dp-phil dp-p5"><b>P5</b><small>Thinking</small></div>
+                                <div class="dp-fork dp-f1">F1</div><div class="dp-fork dp-f2">F2</div><div class="dp-fork dp-f3">F3</div><div class="dp-fork dp-f4">F4</div><div class="dp-fork dp-f5">F5</div>
+                            </div>
+                        </section>
+                        </div>
+                        <section class="dp-panel dp-process">
+                            <h2>How the Process Works</h2><p class="dp-panel-sub">Each philosopher follows these steps repeatedly.</p>
+                            <div class="dp-steps">
+                                <article class="dp-step step-think"><span>1</span><div><b>THINK</b><small>Philosopher is thinking.</small></div></article>
+                                <i class="dp-down">↓</i>
+                                <article class="dp-step step-hungry"><span>2</span><div><b>HUNGRY</b><small>Philosopher becomes hungry and requests forks.</small></div></article>
+                                <i class="dp-down">↓</i>
+                                <article class="dp-step step-acquire"><span>3</span><div><b>ACQUIRE</b><small>Philosopher attempts to acquire two forks.</small></div></article>
+                                <i class="dp-down">↓</i>
+                                <article class="dp-step step-eat"><span>4</span><div><b>EAT</b><small>If both forks are available, the philosopher eats.</small></div></article>
+                                <i class="dp-down">↓</i>
+                                <article class="dp-step step-release"><span>5</span><div><b>RELEASE</b><small>Both forks are released for other philosophers.</small></div></article>
+                                <i class="dp-down">↓</i>
+                                <article class="dp-step step-repeat"><span>6</span><div><b>REPEAT</b><small>The cycle continues.</small></div></article>
+                            </div>
+                        </section>
+                    </div>
+                    <footer class="dp-footer"><span>Operating Systems <b>•</b> Process Synchronization <b>•</b> Deadlock</span><button id="dp-start" type="button">START SIMULATION <b aria-hidden="true">→</b></button></footer>
+                </main>`;
+            document.getElementById("dp-start").addEventListener("click", () => {
+                document.documentElement.classList.remove("dp-page");
+                document.body.classList.remove("dp-page");
+                mount.classList.remove("dp-mount");
+                document.documentElement.style.overflow = "auto";
+                document.body.style.overflow = "auto";
+                simulator.render(mount);
+                window.scrollTo(0, 0);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

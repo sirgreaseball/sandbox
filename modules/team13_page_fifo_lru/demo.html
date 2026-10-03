@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Replacement Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="module-container"></main>
+
+    <script src="module.js"></script>
+    <script>
+        const pageReplacement =
+            window.OSDashboard.modules["team13_page_fifo_lru"];
+
+        pageReplacement.render(
+            document.getElementById("module-container")
+        );
+    </script>
+</body>
+</html>

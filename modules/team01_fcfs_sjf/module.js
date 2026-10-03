@@ -1,0 +1,1 @@
+/* The dashboard implementation is embedded in demo.html. */

@@ -1,0 +1,21 @@
+/*
+ * OS Concepts Visualization Dashboard · shared theme (Team 15, Section 5.1)
+ *
+ * The five contract variables every module colours itself with. Values are the
+ * navy / teal / orange scheme used in OS_Dashboard_Project_Guidelines.docx:
+ *   navy   #1B3A5C  heading and table-header colour in the guidelines
+ *   teal   #1F7A72  sub-heading colour
+ *   orange #E8871E  accent colour
+ *   bg     #F5F5F5  neutral panel fill
+ *   text   #222222  body text colour
+ *
+ * This file is loaded without a cascade layer, so it wins over any :root
+ * redefinition inside a module stylesheet (those are imported into layers).
+ */
+:root {
+  --os-navy: #1B3A5C;
+  --os-teal: #1F7A72;
+  --os-orange: #E8871E;
+  --os-bg: #F5F5F5;
+  --os-text: #222222;
+}

@@ -1,0 +1,6 @@
+# Repository docs and maintainer tools are not part of the site.
+/README.md
+/INTEGRATION_LOG.md
+/tools
+/.gitattributes
+/.gitignore

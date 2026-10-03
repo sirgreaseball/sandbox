@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Round Robin CPU Scheduling</title>
+    <link rel="stylesheet" href="styleos.css">
+</head>
+
+<body>
+
+<div class="os-team04">
+
+    <!-- =========================================
+         HEADER
+         ========================================= -->
+    <header>
+
+        <h1>
+            Round Robin CPU Scheduling
+        </h1>
+
+        <!-- =========================================
+             ABOUT ROUND ROBIN CPU SCHEDULING
+             EVERYTHING IS INSIDE HEADER
+             ========================================= -->
+
+        <div class="about-round-robin">
+
+            <h2>
+                About Round Robin CPU Scheduling
+            </h2>
+
+            <!-- DEFINITION -->
+
+            <h3>
+                Definition
+            </h3>
+
+            <p>
+                Round Robin is a preemptive CPU scheduling algorithm
+                in which each process is given a fixed amount of CPU
+                time called a <strong>Time Quantum</strong>. Processes
+                are executed in a circular order. When a process uses
+                its Time Quantum, it is moved to the back of the
+                Ready Queue if it still has remaining execution time.
+            </p>
+
+            <!-- HOW ROUND ROBIN WORKS -->
+
+            <h3>
+                How Round Robin Works
+            </h3>
+
+            <ol>
+
+                <li>
+                    Processes enter the Ready Queue according to
+                    their arrival time.
+                </li>
+
+                <li>
+                    The CPU selects the first process from the
+                    Ready Queue.
+                </li>
+
+                <li>
+                    The selected process executes for a maximum of
+                    one Time Quantum.
+                </li>
+
+                <li>
+                    If the process finishes before the Time Quantum
+                    expires, it leaves the Ready Queue.
+                </li>
+
+                <li>
+                    If the process is not finished, it is moved to
+                    the back of the Ready Queue.
+                </li>
+
+                <li>
+                    The CPU then selects the next process in the queue.
+                </li>
+
+                <li>
+                    This process continues until all processes
+                    are completed.
+                </li>
+
+            </ol>
+
+            <!-- IMPORTANT TERMS -->
+
+            <h3>
+                Important Terms
+            </h3>
+
+            <ul>
+
+                <li>
+                    <strong>Time Quantum:</strong>
+                    The maximum amount of CPU time given to a process
+                    during one turn.
+                </li>
+
+                <li>
+                    <strong>Ready Queue:</strong>
+                    The queue containing processes waiting for CPU execution.
+                </li>
+
+                <li>
+                    <strong>Preemption:</strong>
+                    The running process can be interrupted when its
+                    Time Quantum expires.
+                </li>
+
+                <li>
+                    <strong>Context Switching:</strong>
+                    The CPU switches from one process to another process.
+                </li>
+
+                <li>
+                    <strong>Arrival Time:</strong>
+                    The time at which a process enters the Ready Queue.
+                </li>
+
+                <li>
+                    <strong>Burst Time:</strong>
+                    The total CPU time required by a process for execution.
+                </li>
+
+            </ul>
+
+            <!-- WORKING EXAMPLE -->
+
+            <h3>
+                Working Example
+            </h3>
+
+            <p>
+                Consider four processes P1, P2, P3 and P4 with a
+                Time Quantum of 2 units. The CPU first executes P1
+                for up to 2 units. If P1 is not completed, it moves
+                to the back of the Ready Queue. The CPU then executes
+                P2 for up to 2 units, followed by P3 and P4. The same
+                circular process continues until all processes are completed.
+            </p>
+
+            <!-- CHARACTERISTICS -->
+
+            <h3>
+                Characteristics of Round Robin
+            </h3>
+
+            <ul>
+
+                <li>
+                    It is a <strong>preemptive</strong> scheduling algorithm.
+                </li>
+
+                <li>
+                    It uses a <strong>Time Quantum</strong>.
+                </li>
+
+                <li>
+                    Processes are handled using a
+                    <strong>circular Ready Queue</strong>.
+                </li>
+
+                <li>
+                    Each process gets an opportunity to use the CPU.
+                </li>
+
+                <li>
+                    A process may execute multiple times before completing.
+                </li>
+
+                <li>
+                    Context switching occurs when the CPU moves
+                    between processes.
+                </li>
+
+            </ul>
+
+            <!-- SCHEDULING PERFORMANCE TERMS -->
+
+            <h3>
+                Scheduling Performance Terms
+            </h3>
+
+            <ul>
+
+                <li>
+                    <strong>Completion Time:</strong>
+                    The time at which a process finishes execution.
+                </li>
+
+                <li>
+                    <strong>Turnaround Time:</strong>
+                    The total time from the arrival of a process
+                    until its completion.
+                </li>
+
+                <li>
+                    <strong>Waiting Time:</strong>
+                    The total time a process spends waiting in the
+                    Ready Queue.
+                </li>
+
+                <li>
+                    <strong>Response Time:</strong>
+                    The time from process arrival until it first
+                    gets CPU execution.
+                </li>
+
+            </ul>
+
+            <!-- ADVANTAGES -->
+
+            <h3>
+                Advantages
+            </h3>
+
+            <ul>
+
+                <li>
+                    Fair CPU time is given to each process.
+                </li>
+
+                <li>
+                    Provides good response time for interactive systems.
+                </li>
+
+                <li>
+                    Prevents starvation of processes.
+                </li>
+
+                <li>
+                    Simple and easy to implement.
+                </li>
+
+                <li>
+                    Suitable for time-sharing operating systems.
+                </li>
+
+            </ul>
+
+            <!-- DISADVANTAGES -->
+
+            <h3>
+                Disadvantages
+            </h3>
+
+            <ul>
+
+                <li>
+                    Performance depends on the selected Time Quantum.
+                </li>
+
+                <li>
+                    A very small Time Quantum causes more context switching.
+                </li>
+
+                <li>
+                    A very large Time Quantum makes Round Robin behave
+                    more like FCFS.
+                </li>
+
+                <li>
+                    Context switching creates additional overhead.
+                </li>
+
+                <li>
+                    It may result in higher average waiting time in
+                    some cases.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         SCHEDULING CONTROLS
+         ========================================= -->
+
+    <section>
+
+        <h2>
+            Scheduling Controls
+        </h2>
+
+        <label for="quantum">
+            Time Quantum:
+        </label>
+
+        <input
+            type="number"
+            id="quantum"
+            value="2"
+            min="1"
+            step="1"
+        >
+
+        <span>
+            units
+        </span>
+
+        <br>
+        <br>
+
+        <button
+            id="runButton"
+            type="button"
+        >
+            Run Round Robin
+        </button>
+
+        <button
+            id="resetButton"
+            type="button"
+        >
+            Reset
+        </button>
+
+    </section>
+
+
+    <!-- =========================================
+         PROCESS DETAILS
+         ========================================= -->
+
+    <section>
+
+        <h2>
+            Process Details
+        </h2>
+
+        <label for="processCount">
+            Number of Processes:
+        </label>
+
+        <input
+            type="number"
+            id="processCount"
+            value="4"
+            min="1"
+            max="20"
+            step="1"
+        >
+
+        <button
+            id="updateProcessesButton"
+            type="button"
+        >
+            Update Processes
+        </button>
+
+        <br>
+        <br>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Process ID
+                    </th>
+
+                    <th>
+                        Arrival Time
+                    </th>
+
+                    <th>
+                        Burst Time
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="processTableBody">
+
+                <tr>
+
+                    <td>
+                        <input
+                            class="pid"
+                            value="P1"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="arrival"
+                            type="number"
+                            value="0"
+                            min="0"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="burst"
+                            type="number"
+                            value="5"
+                            min="1"
+                        >
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input
+                            class="pid"
+                            value="P2"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="arrival"
+                            type="number"
+                            value="1"
+                            min="0"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="burst"
+                            type="number"
+                            value="3"
+                            min="1"
+                        >
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input
+                            class="pid"
+                            value="P3"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="arrival"
+                            type="number"
+                            value="2"
+                            min="0"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="burst"
+                            type="number"
+                            value="4"
+                            min="1"
+                        >
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input
+                            class="pid"
+                            value="P4"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="arrival"
+                            type="number"
+                            value="3"
+                            min="0"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            class="burst"
+                            type="number"
+                            value="2"
+                            min="1"
+                        >
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- =========================================
+         READY QUEUE
+         ========================================= -->
+
+    <section>
+
+        <h2>
+            Ready Queue
+        </h2>
+
+        <div
+            class="ready-queue"
+            id="readyQueue"
+        >
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         GANTT CHART
+         ========================================= -->
+
+    <section>
+
+        <h2>
+            Gantt Chart
+        </h2>
+
+        <div
+            class="gantt-chart"
+            id="ganttChart"
+        >
+            Gantt Chart will appear here
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         RESULTS
+         ========================================= -->
+
+    <section>
+
+        <h2>
+            Scheduling Results
+        </h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Process
+                    </th>
+
+                    <th>
+                        Completion Time
+                    </th>
+
+                    <th>
+                        Turnaround Time
+                    </th>
+
+                    <th>
+                        Waiting Time
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="resultsBody">
+            </tbody>
+
+        </table>
+
+
+        <div class="average-results">
+
+            <p>
+
+                <strong>
+                    Average Waiting Time:
+                </strong>
+
+                <span id="avgWaiting">
+                    —
+                </span>
+
+                units
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Average Turnaround Time:
+                </strong>
+
+                <span id="avgTurnaround">
+                    —
+                </span>
+
+                units
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOOTER
+         ========================================= -->
+
+    <footer>
+
+        <p>
+            Round Robin CPU Scheduling
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+<script src="module.js"></script>
+
+</body>
+</html>

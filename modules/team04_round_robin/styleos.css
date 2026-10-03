@@ -1,0 +1,320 @@
+/* =========================================
+   TEAM 04 - ROUND ROBIN CPU SCHEDULING
+   BASIC UI STYLING
+   ========================================= */
+
+.os-team04 {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    color: #1f2937;
+    min-height: 100vh;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.os-team04 header {
+    max-width: 1100px;
+    margin: 0 auto 25px auto;
+    background-color: #ffffff;
+    border: 1px solid #d9dee7;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.os-team04 header h1 {
+    margin: 0 0 10px 0;
+    font-size: 30px;
+}
+
+.os-team04 header > p {
+    margin: 6px 0;
+    color: #64748b;
+}
+
+
+/* =========================================
+   ABOUT ROUND ROBIN
+   EVERYTHING IS INSIDE HEADER
+   ========================================= */
+
+.os-team04 .about-round-robin {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.os-team04 .about-round-robin h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 24px;
+    color: #1f2937;
+}
+
+.os-team04 .about-round-robin h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #294b9b;
+}
+
+.os-team04 .about-round-robin p {
+    margin-bottom: 15px;
+    color: #475569;
+}
+
+.os-team04 .about-round-robin ul,
+.os-team04 .about-round-robin ol {
+    padding-left: 25px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    color: #475569;
+}
+
+.os-team04 .about-round-robin li {
+    margin-bottom: 8px;
+}
+
+.os-team04 .about-round-robin strong {
+    color: #334155;
+}
+
+
+/* =========================================
+   SECTIONS
+   ========================================= */
+
+.os-team04 section {
+    max-width: 1100px;
+    margin: 0 auto 20px auto;
+    background-color: #ffffff;
+    border: 1px solid #d9dee7;
+    border-radius: 12px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.os-team04 section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+}
+
+
+/* =========================================
+   TIME QUANTUM
+   ========================================= */
+
+.os-team04 label {
+    font-weight: bold;
+}
+
+.os-team04 input[type="number"] {
+    width: 80px;
+    padding: 10px;
+    margin-left: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.os-team04 section span {
+    color: #64748b;
+}
+
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.os-team04 button {
+    padding: 11px 20px;
+    margin-right: 8px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.os-team04 #runButton {
+    background-color: #294b9b;
+    color: #ffffff;
+    border: 1px solid #294b9b;
+}
+
+.os-team04 #resetButton {
+    background-color: #ffffff;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.os-team04 button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.os-team04 table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.os-team04 th {
+    background-color: #eef2f7;
+    color: #334155;
+    padding: 13px;
+    border: 1px solid #d9dee7;
+    font-size: 14px;
+}
+
+.os-team04 td {
+    padding: 13px;
+    text-align: center;
+    border: 1px solid #d9dee7;
+}
+
+.os-team04 tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+
+/* =========================================
+   READY QUEUE
+   ========================================= */
+
+.os-team04 .ready-queue {
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+.os-team04 .process-box {
+    min-width: 70px;
+    padding: 15px 20px;
+    background-color: #e8eefc;
+    color: #294b9b;
+    border: 2px solid #294b9b;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   GANTT CHART
+   ========================================= */
+
+.os-team04 .gantt-chart {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    color: #64748b;
+    font-size: 16px;
+}
+
+
+/* =========================================
+   RESULTS
+   ========================================= */
+
+.os-team04 .average-results {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.os-team04 .average-results p {
+    flex: 1;
+    margin: 0;
+    padding: 18px;
+    background-color: #f8fafc;
+    border: 1px solid #d9dee7;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.os-team04 .average-results strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.os-team04 .average-results span {
+    font-size: 22px;
+    font-weight: bold;
+    color: #294b9b;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.os-team04 footer {
+    max-width: 1100px;
+    margin: 20px auto;
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   MOBILE / SMALL SCREEN
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .os-team04 {
+        padding: 15px;
+    }
+
+    .os-team04 header,
+    .os-team04 section {
+        padding: 18px;
+    }
+
+    .os-team04 header h1 {
+        font-size: 24px;
+    }
+
+    .os-team04 .about-round-robin h2 {
+        font-size: 21px;
+    }
+
+    .os-team04 .about-round-robin h3 {
+        font-size: 17px;
+    }
+
+    .os-team04 .average-results {
+        flex-direction: column;
+    }
+
+    .os-team04 .ready-queue {
+        overflow-x: auto;
+    }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team 5 - Contiguous Memory / Process Allocation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #f0f2f5;
+        }
+        #app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container"></div>
+    <script>
+        // Define the global namespace
+        window.OSDashboard = window.OSDashboard || { modules: {} };
+    </script>
+    <script src="module.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('app-container');
+            const mod = window.OSDashboard.modules["team05_allocation"];
+            if (mod) {
+                mod.render(container);
+            } else {
+                container.innerHTML = '<p style="color: red; padding: 20px;">Error: Module "team05_allocation" not found.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

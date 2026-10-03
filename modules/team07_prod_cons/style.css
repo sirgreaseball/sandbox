@@ -1,0 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+.os-team07 {
+  --os-navy-fallback: #1e3a8a;
+  --os-teal-fallback: #0d9488;
+  --os-orange-fallback: #ea580c;
+  --os-bg-fallback: #f4f4f5;
+  --os-text-fallback: #18181b;
+
+  --theme-navy: var(--os-navy, var(--os-navy-fallback));
+  --theme-teal: var(--os-teal, var(--os-teal-fallback));
+  --theme-orange: var(--os-orange, var(--os-orange-fallback));
+  --theme-bg: var(--os-bg, var(--os-bg-fallback));
+  --theme-text: var(--os-text, var(--os-text-fallback));
+
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  
+  /* Force the container to respect the screen size and scroll */
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.os-team07 input {
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+.os-team07 * {
+  box-sizing: border-box;
+}
+
+.os-team07 button:focus-visible,
+.os-team07 input:focus-visible {
+  outline: 3px solid var(--theme-teal);
+  outline-offset: 2px;
+}
+
+/* Utility Class */
+.os-team07 .d-none {
+  display: none !important;
+}
+
+/* Header & Controls */
+.os-team07 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--theme-text);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.os-team07 .title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.os-team07 .header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.os-team07 .btn {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  border: 2px solid var(--theme-text);
+  padding: 0.5rem 1rem;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.os-team07 .btn:hover {
+  background-color: var(--theme-text);
+  color: var(--theme-bg);
+}
+
+.os-team07 .btn.active {
+  background-color: var(--theme-teal);
+  color: var(--theme-bg);
+  border-color: var(--theme-teal);
+}
+
+.os-team07 .controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.os-team07 .speed-control {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  font-family: 'Space Mono', monospace;
+  align-items: center;
+}
+
+.os-team07 .speed-control input[type="range"] {
+  width: 90px;
+}
+
+.os-team07 .speed-control input[type="number"] {
+  width: 50px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  border: 2px solid var(--theme-text);
+  background: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Layout: Dashboard Content */
+.os-team07 .dashboard-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
+}
+
+.os-team07 .sim-section {
+  flex: 2 1 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.os-team07 .docs-section {
+  flex: 1 1 350px;
+  background: white;
+  border: 4px solid var(--theme-navy);
+  padding: 1.5rem;
+  box-shadow: 8px 8px 0 var(--theme-navy);
+  user-select: text;
+  -webkit-user-select: text;
+  
+  /* Ensure the documentation box itself can scroll if the screen is too small */
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  
+  /* Stylish Scrollbar for the docs panel */
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-navy) var(--theme-bg);
+}
+
+.os-team07 .docs-section::-webkit-scrollbar {
+  width: 8px;
+}
+.os-team07 .docs-section::-webkit-scrollbar-track {
+  background: var(--theme-bg);
+}
+.os-team07 .docs-section::-webkit-scrollbar-thumb {
+  background-color: var(--theme-navy);
+  border-radius: 4px;
+}
+
+
+/* Main Workspace */
+.os-team07 .workspace {
+  display: flex;
+  gap: 2rem;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Process Arms */
+.os-team07 .process-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  border: 2px dashed var(--theme-navy);
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+.os-team07 .process-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.os-team07 .process-state {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--theme-navy);
+  color: white;
+  margin-top: 1rem;
+}
+
+.os-team07 .process-state.blocked {
+  background-color: var(--theme-orange);
+}
+
+.os-team07 .process-state.active {
+  background-color: var(--theme-teal);
+}
+
+/* Carousel Buffer */
+@keyframes os-team07-spin {
+  100% { transform: rotate(360deg); }
+}
+
+.os-team07 .carousel-container {
+  position: relative;
+  width: 280px; 
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 4px solid var(--theme-navy);
+  margin: 0 auto;
+  transition: width 0.3s, height 0.3s;
+}
+
+/* Spinning Rotor (holds the slots) */
+.os-team07 .carousel-rotor {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  animation: os-team07-spin 20s linear infinite;
+  animation-play-state: paused;
+  z-index: 5;
+}
+
+.os-team07 .carousel-container.is-spinning .carousel-rotor {
+  animation-play-state: running;
+}
+
+.os-team07 .carousel-lock {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: var(--theme-text);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--theme-bg);
+  z-index: 10;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+}
+
+.os-team07 .carousel-lock.locked-prod {
+  transform: translateX(-40px);
+  background-color: var(--theme-teal);
+}
+
+.os-team07 .carousel-lock.locked-cons {
+  transform: translateX(40px);
+  background-color: var(--theme-teal);
+}
+
+.os-team07 .carousel-lock.contention {
+  background-color: var(--theme-orange);
+}
+
+.os-team07 .slot {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--theme-navy);
+  background-color: var(--theme-bg);
+  top: 50%;
+  left: 50%;
+  margin-top: -18px;
+  margin-left: -18px;
+  transform-origin: 50% 50%;
+  transition: background-color 0.2s, transform 0.3s;
+}
+
+.os-team07 .slot.filled {
+  background-color: var(--theme-teal);
+  border-color: var(--theme-teal);
+}
+
+/* Semaphore Gauges */
+.os-team07 .gauges {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 1rem;
+  border-top: 2px solid var(--theme-text);
+  padding-top: 1.5rem;
+  position: relative;
+  z-index: 20;
+}
+
+.os-team07 .gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.os-team07 .gauge-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.os-team07 .gauge-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--theme-navy);
+}
+
+.os-team07 .gauge-value.critical {
+  color: var(--theme-orange);
+}
+
+/* Docs Section Styles */
+.os-team07 .docs-section h3 {
+  margin-top: 0;
+  color: var(--theme-navy);
+  font-size: 1.3rem;
+  border-bottom: 2px solid var(--theme-text);
+  padding-bottom: 0.5rem;
+}
+.os-team07 .docs-section h4 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--theme-navy);
+  font-size: 1rem;
+}
+.os-team07 .docs-section p, 
+.os-team07 .docs-section li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+.os-team07 .code-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.os-team07 .code-block {
+  flex: 1 1 180px;
+  background: #18181b;
+  color: #f4f4f5;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-team07 * {
+    transition: none !important;
+  }
+  .os-team07 .carousel-rotor {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .os-team07 .workspace {
+    flex-direction: column;
+    align-items: center;
+  }
+  .os-team07 .carousel-lock.locked-prod { transform: translateY(-40px); }
+  .os-team07 .carousel-lock.locked-cons { transform: translateY(40px); }
+  .os-team07 .gauges { gap: 1rem; }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Disk Scheduling : FCFS and SSTF
+    </title>
+
+    <!-- Shared project theme variables -->
+    <style>
+        :root {
+            --os-navy: #10233f;
+            --os-teal: #0f766e;
+            --os-orange: #e67e22;
+            --os-bg: #f4f7fb;
+            --os-text: #172033;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: var(--os-bg);
+        }
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="team10-module-container"></div>
+
+    <script src="module.js"></script>
+
+    <script>
+        const container =
+            document.getElementById(
+                "team10-module-container"
+            );
+
+        window.OSDashboard.modules[
+            "disk_fcfs_sstf"
+        ].render(container);
+    </script>
+
+</body>
+</html>

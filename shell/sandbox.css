@@ -2118,3 +2118,8 @@
 @media (max-width: 519.98px) {
   .os-team15 .k-crumb { display: none; }
 }
+
+/* Touch screens have no Ctrl K; the search pill keeps only its label there. */
+@media (hover: none) {
+  .os-team15 .k-hub .k-kbd { display: none; }
+}

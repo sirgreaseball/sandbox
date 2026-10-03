@@ -19,20 +19,19 @@ A scroll-driven landing page introduces all of it.
 - It needs a browser from 2022 or later: Chrome or Edge 108+, Firefox 110+, or Safari 16+. It uses CSS cascade layers and WebGL2.
 - Deep links work, for example `index.html#/overview`, `index.html#/m/team04_round_robin` and `index.html#/integration`.
 
-### Deploying to Vercel
+### Live site
 
-This folder is a plain static site; `vercel.json` only adds cache headers. To deploy it:
-
-1. Run `npx vercel` from inside `team15_dashboard`, or drag the folder onto vercel.com/new.
-2. When asked about a framework, answer **Other**.
-3. Leave the build command and the output directory empty.
+- **https://sandbox-os.vercel.app**, deployed on Vercel from the private GitHub repository `sirgreaseball/sandbox` (branch `main`). Every push to `main` redeploys it.
+- It is a plain static site: no framework, no build step. `vercel.json` only adds cache and security headers.
+- `.vercelignore` keeps this README, the integration log and `tools/` out of the public site.
+- `.gitattributes` stores every file byte for byte, so the team folders on the site match the submissions exactly.
 
 ## Using the dashboard
 
 | Where | What it does |
 | --- | --- |
 | Landing (`#/`) | Scroll through the five topic areas while the WebGL scene changes shape, then pick a module from the gallery. |
-| Index (`#/overview`) | Every module's metric label, value and unit, exactly as `getMetrics()` returns them. Rows are flagged where the label or unit differs from Section 4. The value from before the last reset stays visible. Hover a row to preview the module. |
+| Index (`#/overview`) | Every module's metric label, value and unit, exactly as `getMetrics()` returns them. Rows are flagged where the label or unit differs from Section 4, and the value from before the last reset stays visible. Filter by topic with the pills. On a computer, hovering a row previews the module and lights its core on the turning die at the top; on a phone, each row shows a thumbnail. |
 | A module (`#/m/<key>`) | The module renders on its own white stage. The header shows its live `getMetrics()` value, **Reset** (calls `reset()`, then renders fresh) and **Standalone**, which opens the team's own `demo.html`. |
 | Integration log (`#/integration`) | Per-team contract checks, some re-run live in the browser. Also what Team 15 adapted, the SHA-256 hash of every submitted file, and screenshots from testing each team's demo on its own. |
 

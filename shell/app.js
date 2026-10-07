@@ -629,6 +629,7 @@
       if (!hub.engine) {
         hub.engine = K.GL.create(hub.canvas, {
           chapter: 6,
+          tier: "mid",
           spin: 0.6,
           onReady: live,
           onFail: function () {

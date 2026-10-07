@@ -2123,3 +2123,6 @@
 @media (hover: none) {
   .os-team15 .k-hub .k-kbd { display: none; }
 }
+
+/* The Index preview never lingers outside the dashboard. */
+.os-team15-host:not(.k-in-app) .k-preview { display: none; }

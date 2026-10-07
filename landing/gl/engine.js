@@ -556,9 +556,9 @@
   ].join("\n");
 
   var TIERS = {
-    high: { count: 32000, dpr: 1.5, size: 1.75, bloom: 1.15 },
-    mid: { count: 20000, dpr: 1.25, size: 1.9, bloom: 1.05 },
-    low: { count: 10000, dpr: 1.0, size: 2.2, bloom: 0.95 }
+    high: { count: 26000, dpr: 1.25, size: 1.8, bloom: 1.15 },
+    mid: { count: 18000, dpr: 1.0, size: 2.0, bloom: 1.05 },
+    low: { count: 9000, dpr: 0.85, size: 2.3, bloom: 0.95 }
   };
   var TIER_ORDER = ["high", "mid", "low"];
 
@@ -576,7 +576,9 @@
     var cores = navigator.hardwareConcurrency || 4;
     var memory = navigator.deviceMemory || 8;
     if (cores <= 2 || memory <= 2) return "low";
-    if (coarse || window.innerWidth < 1100 || cores < 8 || memory < 8) return "mid";
+    // Firefox's WebGL path is slower on the same hardware, so it starts a tier down.
+    var firefox = /Firefox\//.test(navigator.userAgent);
+    if (coarse || firefox || window.innerWidth < 1100 || cores < 8 || memory < 8) return "mid";
     return "high";
   }
 
@@ -681,6 +683,7 @@
     var dive = 0, diving = false, diveStart = 0;
     var frozenTime = options.time;
     var frames = [];
+    var goodWindows = 0;
     var drawnFrames = 0;
     var tierLocked = !!options.tier;
 
@@ -848,6 +851,9 @@
       var cssW = canvas.clientWidth || window.innerWidth;
       var cssH = canvas.clientHeight || window.innerHeight;
       dpr = Math.min(window.devicePixelRatio || 1, options.dpr || tier.dpr);
+      // Pixel budget: big screens render at a lower ratio instead of filling 3-4 million pixels.
+      var budget = options.dpr ? Infinity : 2.1e6;
+      if (cssW * cssH * dpr * dpr > budget) dpr = Math.max(0.6, Math.sqrt(budget / (cssW * cssH)));
       var w = Math.max(2, Math.round(cssW * dpr));
       var h = Math.max(2, Math.round(cssH * dpr));
       if (w === width && h === height && targets.scene) return;
@@ -1049,18 +1055,21 @@
     function probe(dt) {
       if (tierLocked || document.hidden) return;
       frames.push(dt);
-      if (frames.length < 90) return;
+      if (frames.length < 60) return;
       var sorted = frames.slice().sort(function (a, b) { return a - b; });
       var median = sorted[sorted.length >> 1];
+      var p90 = sorted[Math.floor(sorted.length * 0.9)];
       frames = [];
       var i = TIER_ORDER.indexOf(tierName);
-      if (median > 0.021 && i < TIER_ORDER.length - 1) {
+      // Step down on a slow median or on frequent long frames (visible stutter).
+      if ((median > 0.019 || p90 > 0.026) && i < TIER_ORDER.length - 1) {
+        goodWindows = 0;
         tierName = TIER_ORDER[i + 1];
         tier = TIERS[tierName];
         width = 0;
         resize();
         canvas.setAttribute("data-tier", tierName);
-      } else if (median < 0.0135) {
+      } else if (p90 < 0.018 && ++goodWindows >= 3) {
         tierLocked = true;
       }
     }

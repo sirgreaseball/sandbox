@@ -278,24 +278,26 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 96px;
-  height: 96px;
-  margin: -48px 0 0 -48px;
+  width: 112px;
+  height: 112px;
+  margin: -56px 0 0 -56px;
   overflow: visible;
 }
 
-.os-team15 .k-loader-ring {
-  fill: none;
-  stroke: rgba(243, 245, 251, 0.9);
-  stroke-width: 2;
-  stroke-dasharray: 60 216;
-  transform-origin: 60px 60px;
-  animation: k-spin 1.1s linear infinite;
+/* The mark boots: one dot per module lights as the work completes. */
+.os-team15 .k-loader-dot {
+  fill: rgba(199, 214, 255, 0.16);
+  transition: fill 240ms ease;
 }
 
-.os-team15 .k-loader-core { fill: #F2A04A; }
+.os-team15 .k-loader-dot.is-on { fill: #C7D6FF; }
 
-@keyframes k-spin { to { transform: rotate(360deg); } }
+.os-team15 .k-loader-core {
+  fill: #FF8F2E;
+  animation: k-breathe 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes k-breathe { from { opacity: 0.55; } to { opacity: 1; } }
 
 .os-team15 .k-loader-word {
   position: absolute;
@@ -369,13 +371,20 @@
 
 .os-team15 .k-mark {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  gap: 10px;
   color: inherit;
   font: 580 24px/1 var(--k-font);
   font-stretch: 125%;
   letter-spacing: -0.045em;
   text-decoration: none;
   border-radius: 6px;
+}
+
+.os-team15 .k-mark-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
 }
 
 .os-team15 .k-mark:focus-visible { outline: 2px solid var(--k-accent); outline-offset: 4px; }
@@ -1734,7 +1743,7 @@
   .os-team15 .k-side,
   .os-team15 .k-side.is-open { transition: opacity 180ms ease, visibility 0s; }
   .os-team15 .k-skel,
-  .os-team15 .k-loader-ring { animation: none; }
+  .os-team15 .k-loader-core { animation: none; }
   .os-team15 .k-gl,
   .os-team15 .k-posters,
   .os-team15 .k-poster { transition-duration: 300ms; }

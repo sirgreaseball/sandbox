@@ -650,7 +650,12 @@
     var shown = { v: 0 };
     var target = 0.08;
     var done = false;
-    var render = function () { if (loaderN) loaderN.textContent = String(Math.round(shown.v * 100)); };
+    var dots = loader ? loader.querySelectorAll(".k-loader-dot") : [];
+    var render = function () {
+      if (loaderN) loaderN.textContent = String(Math.round(shown.v * 100));
+      var lit = Math.round(shown.v * dots.length);
+      for (var i = 0; i < dots.length; i++) dots[i].classList.toggle("is-on", i < lit);
+    };
     var progress = function (p) { target = Math.max(target, p); };
 
     var ticker = null;

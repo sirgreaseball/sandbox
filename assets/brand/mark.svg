@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>sandbox</title>
+  <defs><radialGradient id="sandbox-glow"><stop offset="0" stop-color="#FF8F2E" stop-opacity=".5"/><stop offset="1" stop-color="#FF8F2E" stop-opacity="0"/></radialGradient></defs>
+  <rect width="64" height="64" rx="14" fill="#07080C"/>
+  <g fill="#C7D6FF"><circle cx="14" cy="18.5" r="2.5"/><circle cx="23" cy="18.5" r="2.5"/><circle cx="32" cy="18.5" r="2.5"/><circle cx="41" cy="18.5" r="2.5"/><circle cx="50" cy="18.5" r="2.5"/><circle cx="50" cy="27.5" r="2.5"/><circle cx="50" cy="36.5" r="2.5"/><circle cx="50" cy="45.5" r="2.5"/><circle cx="41" cy="45.5" r="2.5"/><circle cx="32" cy="45.5" r="2.5"/><circle cx="23" cy="45.5" r="2.5"/><circle cx="14" cy="45.5" r="2.5"/><circle cx="14" cy="36.5" r="2.5"/><circle cx="14" cy="27.5" r="2.5"/></g>
+  <circle cx="32" cy="32" r="10" fill="url(#sandbox-glow)"/>
+  <circle cx="32" cy="32" r="5" fill="#FF8F2E"/>
+</svg>

@@ -44,10 +44,10 @@ An Operating Systems course split the class into fifteen teams. Teams 1 to 14 ea
 <div align="center">
 <table>
   <tr>
-    <td align="center" width="25%"><h2>14 / 14</h2>modules live</td>
-    <td align="center" width="25%"><h2>58</h2>team files, byte for byte<br>as submitted</td>
-    <td align="center" width="25%"><h2>0</h2>console errors across<br>the end-to-end runs</td>
-    <td align="center" width="25%"><h2>0</h2>build steps, installs<br>or servers needed</td>
+    <td align="center" width="25%"><h3>14 / 14</h3>modules live</td>
+    <td align="center" width="25%"><h3>58 / 58</h3>team files untouched</td>
+    <td align="center" width="25%"><h3>0</h3>console errors end to end</td>
+    <td align="center" width="25%"><h3>0</h3>build steps</td>
   </tr>
 </table>
 </div>
